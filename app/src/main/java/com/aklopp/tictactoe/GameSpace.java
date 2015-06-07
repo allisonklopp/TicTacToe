@@ -119,6 +119,14 @@ public class GameSpace extends ImageView{
     }
 
     /**
+     * Setter for the user marker.
+     * @param marker
+     */
+    public void setMarker(State marker) {
+        this.mUserMarker = marker;
+    }
+
+    /**
      * Enum describing game space's current state
      */
     public enum State

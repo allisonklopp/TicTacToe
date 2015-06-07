@@ -47,9 +47,17 @@ public class GameAI {
 
     /**
      * Constructor
-     * @param marker the marker the AI will use
      */
-    public GameAI(GameSpace.State marker)
+    public GameAI()
+    {
+        // Intentionally blank
+    }
+
+    /**
+     * Sets the marker for the AI and human players.
+     * @param marker
+     */
+    public void setMarker(GameSpace.State marker)
     {
         this.mAIMarker = marker;
         if(marker == GameSpace.State.O_MARK)

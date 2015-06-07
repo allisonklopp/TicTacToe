@@ -27,6 +27,7 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
     public GameBoardAdapter(Context context, GameSpace.State userMarker) {
         super(context, -1);
         mAdapter = this;
+        mGameAI = new GameAI();
 
         setUserMarker(userMarker);
     }
@@ -114,13 +115,27 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
      * Initialize a new game with all blank spaces.
      */
     public void initNewGame() {
-        mGameBoard = new GameSpace[BOARD_DIMENSION][BOARD_DIMENSION]; // TODO: magic
-        for (int row = 0; row < BOARD_DIMENSION; row++) {
-            for (int col = 0; col < BOARD_DIMENSION; col++) {
-                GameSpace space = new GameSpace(getContext(), mUserMarker);
-                mGameBoard[row][col] = space;
+        if(null == mGameBoard) {
+            mGameBoard = new GameSpace[BOARD_DIMENSION][BOARD_DIMENSION];
+            for (int row = 0; row < BOARD_DIMENSION; row++) {
+                for (int col = 0; col < BOARD_DIMENSION; col++) {
+                    GameSpace space = new GameSpace(getContext(), mUserMarker);
+                    mGameBoard[row][col] = space;
+                }
+            }
+
+        }
+
+        else {
+            for (int row = 0; row < BOARD_DIMENSION; row++) {
+                for (int col = 0; col < BOARD_DIMENSION; col++) {
+                    mGameBoard[row][col].setState(GameSpace.State.BLANK);
+                    mGameBoard[row][col].setMarker(mUserMarker);
+                    mGameBoard[row][col].setClickable(true);
+                }
             }
         }
+
         this.notifyDataSetChanged();
 
         // If the user is playing as O, the AI gets to move first.
@@ -155,10 +170,10 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
         this.mUserMarker = userMarker;
 
         // Set the opposite marker for the Game AI
-        if(userMarker.equals(GameSpace.State.O_MARK))
-            mGameAI = new GameAI(GameSpace.State.X_MARK);
+        if(mUserMarker.equals(GameSpace.State.O_MARK))
+            mGameAI.setMarker(GameSpace.State.X_MARK);
         else
-            mGameAI = new GameAI(GameSpace.State.O_MARK);
+            mGameAI.setMarker(GameSpace.State.O_MARK);
 
         initNewGame();
     }

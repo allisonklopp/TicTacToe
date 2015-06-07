@@ -81,6 +81,11 @@ public class GameFragment extends Fragment {
     private int mNumberOfCompletedGames = 0;
 
     /**
+     * The adapter for the game board
+     */
+    private GameBoardAdapter mGameAdapter;
+
+    /**
      * Constructor
      */
     public GameFragment() {
@@ -153,32 +158,37 @@ public class GameFragment extends Fragment {
      */
     public void initAdapter(GridView gameBoard)
     {
-        final GameBoardAdapter mGameAdapter = new GameBoardAdapter(getActivity(), getCurrentMarkerSetting());
-        mGameAdapter.setOnGameOverListener(new GameBoardAdapter.OnGameOverListener() {
-            @Override
-            public void onGameOver(Outcome outcome) {
-                mNumberOfCompletedGames++;
+        if(null == gameBoard.getAdapter()) {
+            mGameAdapter = new GameBoardAdapter(getActivity(), getCurrentMarkerSetting());
+            mGameAdapter.setOnGameOverListener(new GameBoardAdapter.OnGameOverListener() {
+                @Override
+                public void onGameOver(Outcome outcome) {
+                    mNumberOfCompletedGames++;
 
-                // Increment related counter depending on outcome.
-                switch (outcome) {
-                    case LOSE:
-                        mNumberOfLosses++;
-                        break;
-                    case WIN:
-                        mNumberOfWins++;
-                        break;
-                    case TIE:
-                        mNumberOfTies++;
-                        break;
+                    // Increment related counter depending on outcome.
+                    switch (outcome) {
+                        case LOSE:
+                            mNumberOfLosses++;
+                            break;
+                        case WIN:
+                            mNumberOfWins++;
+                            break;
+                        case TIE:
+                            mNumberOfTies++;
+                            break;
+                    }
+
+                    mGameResultTextView.setText("YOU " + outcome.getPastTense());
+
+                    updateOutcomeRates();
                 }
-
-                mGameResultTextView.setText("YOU " + outcome.getPastTense());
-
-                updateOutcomeRates();
-            }
-        });
-
-        gameBoard.setAdapter(mGameAdapter);
+            });
+            gameBoard.setAdapter(mGameAdapter);
+        }
+        else
+        {
+            mGameAdapter.setUserMarker(getCurrentMarkerSetting());
+        }
     }
 
     /**
