@@ -9,7 +9,8 @@ import android.widget.ArrayAdapter;
 /**
  * Created by Allison on 6/5/2015.
  */
-public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
+public class GameBoardAdapter extends ArrayAdapter<GameSpace>
+{
     private static final int NUMBER_OF_BOARD_SQUARES = 9;
     private static final int BOARD_DIMENSION = 3;
     private GameSpace.State mUserMarker;
@@ -22,9 +23,11 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
 
     /**
      * Constructor
+     *
      * @param context
      */
-    public GameBoardAdapter(Context context, GameSpace.State userMarker) {
+    public GameBoardAdapter(Context context, GameSpace.State userMarker)
+    {
         super(context, -1);
         mAdapter = this;
         mGameAI = new GameAI();
@@ -33,12 +36,15 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         GameSpace space = getSpace(position);
 
-        space.setOnStateChangedListener(new GameSpace.OnStateChangeListener() {
+        space.setOnStateChangedListener(new GameSpace.OnStateChangeListener()
+        {
             @Override
-            public void onStateChange(GameSpace.State state) {
+            public void onStateChange(GameSpace.State state)
+            {
                 makeAIMoveOnBoard();
             }
         });
@@ -51,10 +57,11 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
     /**
      * Attempt to place an AI move on the board.
      */
-    private void makeAIMoveOnBoard() {
+    private void makeAIMoveOnBoard()
+    {
         mIsGameInProgress = true;
 
-        if(!checkIfGameIsOver())
+        if (!checkIfGameIsOver())
             mGameBoard = mGameAI.makeMove(mGameBoard);
 
         checkIfGameIsOver();
@@ -63,12 +70,15 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
 
     /**
      * Check if the game is over.
+     *
      * @return true if game is over, false otherwise.
      */
-    private boolean checkIfGameIsOver() {
+    private boolean checkIfGameIsOver()
+    {
         boolean isGameOver = mGameAI.isGameOver(mGameBoard);
 
-        if(isGameOver) {
+        if (isGameOver)
+        {
             freezeBoard();
             mOnGameOverListener.onGameOver(mGameAI.getGameOverOutcome(mGameBoard));
         }
@@ -78,10 +88,11 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
     /**
      * Prevent the user from clicking on the board squares.
      */
-    private void freezeBoard() {
-        for(int row = 0; row < BOARD_DIMENSION; row ++)
+    private void freezeBoard()
+    {
+        for (int row = 0; row < BOARD_DIMENSION; row++)
         {
-            for (int col = 0; col < BOARD_DIMENSION; col ++)
+            for (int col = 0; col < BOARD_DIMENSION; col++)
             {
                 mGameBoard[row][col].setClickable(false);
             }
@@ -91,15 +102,17 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
 
     /**
      * Get the game space associated with the given position.
+     *
      * @param position
      * @return the game space
      */
-    private GameSpace getSpace(int position) {
+    private GameSpace getSpace(int position)
+    {
         int col = position % 3;
         int row = 2;
-        if(position <= 2)
+        if (position <= 2)
             row = 0;
-        else if(position <= 5)
+        else if (position <= 5)
             row = 1;
 
         return mGameBoard[row][col];
@@ -114,21 +127,26 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
     /**
      * Initialize a new game with all blank spaces.
      */
-    public void initNewGame() {
-        if(null == mGameBoard) {
+    public void initNewGame()
+    {
+        if (null == mGameBoard)
+        {
             mGameBoard = new GameSpace[BOARD_DIMENSION][BOARD_DIMENSION];
-            for (int row = 0; row < BOARD_DIMENSION; row++) {
-                for (int col = 0; col < BOARD_DIMENSION; col++) {
+            for (int row = 0; row < BOARD_DIMENSION; row++)
+            {
+                for (int col = 0; col < BOARD_DIMENSION; col++)
+                {
                     GameSpace space = new GameSpace(getContext(), mUserMarker);
                     mGameBoard[row][col] = space;
                 }
             }
 
-        }
-
-        else {
-            for (int row = 0; row < BOARD_DIMENSION; row++) {
-                for (int col = 0; col < BOARD_DIMENSION; col++) {
+        } else
+        {
+            for (int row = 0; row < BOARD_DIMENSION; row++)
+            {
+                for (int col = 0; col < BOARD_DIMENSION; col++)
+                {
                     mGameBoard[row][col].setState(GameSpace.State.BLANK);
                     mGameBoard[row][col].setMarker(mUserMarker);
                     mGameBoard[row][col].setClickable(true);
@@ -139,7 +157,7 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
         this.notifyDataSetChanged();
 
         // If the user is playing as O, the AI gets to move first.
-        if(mUserMarker.equals(GameSpace.State.O_MARK))
+        if (mUserMarker.equals(GameSpace.State.O_MARK))
         {
             makeAIMoveOnBoard();
         }
@@ -147,6 +165,7 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
 
     /**
      * Sets the game over listener.
+     *
      * @param listener
      */
     public void setOnGameOverListener(OnGameOverListener listener)
@@ -156,21 +175,25 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
 
     /**
      * Gets the status of the game.
+     *
      * @return true if game is in progress, false otherwise.
      */
-    public boolean isGameInProgress() {
+    public boolean isGameInProgress()
+    {
         return mIsGameInProgress;
     }
 
     /**
      * Set the marker for the user to use.
+     *
      * @param userMarker
      */
-    public void setUserMarker(GameSpace.State userMarker) {
+    public void setUserMarker(GameSpace.State userMarker)
+    {
         this.mUserMarker = userMarker;
 
         // Set the opposite marker for the Game AI
-        if(mUserMarker.equals(GameSpace.State.O_MARK))
+        if (mUserMarker.equals(GameSpace.State.O_MARK))
             mGameAI.setMarker(GameSpace.State.X_MARK);
         else
             mGameAI.setMarker(GameSpace.State.O_MARK);
@@ -181,7 +204,8 @@ public class GameBoardAdapter extends ArrayAdapter<GameSpace> {
     /**
      * Interface to listen for changes of the current state.
      */
-    public interface OnGameOverListener {
+    public interface OnGameOverListener
+    {
 
         /**
          * Called upon a change of the current value.

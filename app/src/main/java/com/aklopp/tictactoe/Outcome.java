@@ -4,7 +4,8 @@ package com.aklopp.tictactoe;
  * Enum describing the result of the completed game.
  * Created by Allison on 6/6/2015.
  */
-public enum Outcome {
+public enum Outcome
+{
     WIN,
     LOSE,
     TIE;

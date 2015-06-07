@@ -10,31 +10,36 @@ import android.view.MenuItem;
  * Main Activity of the application.
  * Created by Allison on 6/5/2015.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_clear_scores) {
+        if (id == R.id.action_clear_scores)
+        {
             ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragment)).clearScores();
             return true;
         }

@@ -12,7 +12,8 @@ import android.widget.ImageView;
  * Represents a single game space on the playing board.
  * Created by Allison on 6/5/2015.
  */
-public class GameSpace extends ImageView{
+public class GameSpace extends ImageView
+{
     /**
      * The starting state of the space
      */
@@ -37,26 +38,32 @@ public class GameSpace extends ImageView{
 
     /**
      * Constructor
+     *
      * @param context
      */
-    public GameSpace(Context context, State userMarker) {
+    public GameSpace(Context context, State userMarker)
+    {
         this(context, null, userMarker);
     }
 
     /**
      * Constructor
+     *
      * @param context
      */
-    public GameSpace(Context context, AttributeSet attrs, State userMarker) {
+    public GameSpace(Context context, AttributeSet attrs, State userMarker)
+    {
         this(context, attrs, 0);
         this.mUserMarker = userMarker;
     }
 
     /**
      * Constructor
+     *
      * @param context
      */
-    public GameSpace(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GameSpace(Context context, AttributeSet attrs, int defStyleAttr)
+    {
         super(context, attrs, defStyleAttr);
 
         this.setBackgroundColor(Color.WHITE);
@@ -67,11 +74,14 @@ public class GameSpace extends ImageView{
 
         this.setImageBitmap(mBlankImage);
 
-        this.setOnClickListener(new OnClickListener() {
+        this.setOnClickListener(new OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 // If square is blank, toggle to user marker
-                if (mState.equals(State.BLANK)) {
+                if (mState.equals(State.BLANK))
+                {
                     mState = mUserMarker;
 
                     if (null != mOnStateChangeListener)
@@ -86,8 +96,9 @@ public class GameSpace extends ImageView{
     /**
      * Set the image for the game square based on the current state.
      */
-    private void setImageBasedOnState() {
-        switch(mState)
+    private void setImageBasedOnState()
+    {
+        switch (mState)
         {
             case BLANK:
                 this.setImageBitmap(mBlankImage);
@@ -103,26 +114,32 @@ public class GameSpace extends ImageView{
 
     /**
      * Getter for the state of the space.
+     *
      * @return state
      */
-    public State getState() {
+    public State getState()
+    {
         return mState;
     }
 
     /**
      * Setter for the state of the space.
+     *
      * @param state
      */
-    public void setState(State state) {
+    public void setState(State state)
+    {
         this.mState = state;
         setImageBasedOnState();
     }
 
     /**
      * Setter for the user marker.
+     *
      * @param marker
      */
-    public void setMarker(State marker) {
+    public void setMarker(State marker)
+    {
         this.mUserMarker = marker;
     }
 
@@ -138,6 +155,7 @@ public class GameSpace extends ImageView{
 
     /**
      * Sets the listener for the state change.
+     *
      * @param listener
      */
     public void setOnStateChangedListener(OnStateChangeListener listener)
@@ -148,7 +166,8 @@ public class GameSpace extends ImageView{
     /**
      * Interface to listen for changes of the current state.
      */
-    public interface OnStateChangeListener {
+    public interface OnStateChangeListener
+    {
 
         /**
          * Called upon a change of the current value.

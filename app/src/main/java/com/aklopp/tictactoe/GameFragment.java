@@ -17,7 +17,8 @@ import android.widget.TextView;
  * A fragment containg the gameboard, game settings and win/tie/lose rate views.
  * Created by Allison on 6/5/2015.
  */
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment
+{
     /**
      * String of blank text used to blank out fields.
      */
@@ -88,25 +89,29 @@ public class GameFragment extends Fragment {
     /**
      * Constructor
      */
-    public GameFragment() {
+    public GameFragment()
+    {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView =  inflater.inflate(R.layout.fragment_main, container, false);
+                             Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         mGameBoard = (GridView) rootView.findViewById(R.id.game_board);
         mGameResultTextView = (TextView) rootView.findViewById(R.id.game_result);
 
         mMarkerRadioGroup = (RadioGroup) rootView.findViewById(R.id.marker_selection);
-        mMarkerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mMarkerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
                 // If we just started a fresh game, user can still switch markers
-                if (!((GameBoardAdapter)mGameBoard.getAdapter()).isGameInProgress())
+                if (!((GameBoardAdapter) mGameBoard.getAdapter()).isGameInProgress())
                 {
-                    ((GameBoardAdapter)mGameBoard.getAdapter()).setUserMarker(getCurrentMarkerSetting());
+                    ((GameBoardAdapter) mGameBoard.getAdapter()).setUserMarker(getCurrentMarkerSetting());
                 }
             }
         });
@@ -114,9 +119,11 @@ public class GameFragment extends Fragment {
         initAdapter(mGameBoard);
 
         Button newGameButton = (Button) rootView.findViewById(R.id.new_game_button);
-        newGameButton.setOnClickListener(new View.OnClickListener() {
+        newGameButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View clickedView) {
+            public void onClick(View clickedView)
+            {
                 mGameResultTextView.setText(BLANK_TEXT);
                 initAdapter(mGameBoard);
             }
@@ -134,6 +141,7 @@ public class GameFragment extends Fragment {
 
     /**
      * Get the current marker selection from the radiogroup.
+     *
      * @return selected marker
      */
     private GameSpace.State getCurrentMarkerSetting()
@@ -141,7 +149,8 @@ public class GameFragment extends Fragment {
         GameSpace.State marker = GameSpace.State.BLANK;
 
         int checkedId = mMarkerRadioGroup.getCheckedRadioButtonId();
-        switch (checkedId) {
+        switch (checkedId)
+        {
             case R.id.o_marker:
                 marker = GameSpace.State.O_MARK;
                 break;
@@ -154,19 +163,24 @@ public class GameFragment extends Fragment {
 
     /**
      * Initialize the adapter for the gameboard.
+     *
      * @param gameBoard
      */
     public void initAdapter(GridView gameBoard)
     {
-        if(null == gameBoard.getAdapter()) {
+        if (null == gameBoard.getAdapter())
+        {
             mGameAdapter = new GameBoardAdapter(getActivity(), getCurrentMarkerSetting());
-            mGameAdapter.setOnGameOverListener(new GameBoardAdapter.OnGameOverListener() {
+            mGameAdapter.setOnGameOverListener(new GameBoardAdapter.OnGameOverListener()
+            {
                 @Override
-                public void onGameOver(Outcome outcome) {
+                public void onGameOver(Outcome outcome)
+                {
                     mNumberOfCompletedGames++;
 
                     // Increment related counter depending on outcome.
-                    switch (outcome) {
+                    switch (outcome)
+                    {
                         case LOSE:
                             mNumberOfLosses++;
                             break;
@@ -184,8 +198,7 @@ public class GameFragment extends Fragment {
                 }
             });
             gameBoard.setAdapter(mGameAdapter);
-        }
-        else
+        } else
         {
             mGameAdapter.setUserMarker(getCurrentMarkerSetting());
         }
@@ -210,15 +223,16 @@ public class GameFragment extends Fragment {
     /**
      * Set the outcome rates based on the current numbers for wins, losses, ties.
      */
-    private void setOutcomeRatesToCurrent() {
+    private void setOutcomeRatesToCurrent()
+    {
         String defaultRate = getResources().getString(R.string.default_rate);
-        if(mNumberOfCompletedGames == 0)
+        if (mNumberOfCompletedGames == 0)
         {
             mWinRateTextView.setText(defaultRate);
             mLoseRateTextView.setText(defaultRate);
             mTieRateTextView.setText(defaultRate);
-        }
-        else {
+        } else
+        {
             mWinRateTextView.setText((String.format(RATE_DECIMAL_FORMAT, (((float) mNumberOfWins / mNumberOfCompletedGames) * 100f))) + PERCENT_SIGN);
             mLoseRateTextView.setText((String.format(RATE_DECIMAL_FORMAT, (((float) mNumberOfLosses / mNumberOfCompletedGames) * 100f))) + PERCENT_SIGN);
             mTieRateTextView.setText((String.format(RATE_DECIMAL_FORMAT, (((float) mNumberOfTies / mNumberOfCompletedGames) * 100f))) + PERCENT_SIGN);
@@ -234,7 +248,7 @@ public class GameFragment extends Fragment {
         mNumberOfWins = sharedPref.getInt(getString(R.string.saved_win_rate), 0);
         mNumberOfLosses = sharedPref.getInt(getString(R.string.saved_lose_rate), 0);
         mNumberOfTies = sharedPref.getInt(getString(R.string.saved_tie_rate), 0);
-        mNumberOfCompletedGames = sharedPref.getInt(getString(R.string.saved_num_games),0);
+        mNumberOfCompletedGames = sharedPref.getInt(getString(R.string.saved_num_games), 0);
 
         setOutcomeRatesToCurrent();
     }
@@ -242,7 +256,8 @@ public class GameFragment extends Fragment {
     /**
      * Clear the win-lose-tie rates.
      */
-    public void clearScores() {
+    public void clearScores()
+    {
         mNumberOfWins = 0;
         mNumberOfLosses = 0;
         mNumberOfTies = 0;
