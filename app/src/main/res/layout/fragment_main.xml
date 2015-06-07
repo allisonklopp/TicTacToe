@@ -1,0 +1,145 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivityFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/game_settings"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <RadioGroup
+            android:id="@+id/marker_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <RadioButton
+                android:id="@+id/x_marker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/play_as_x"
+                android:checked="true"
+                android:textColor="@color/red"
+                android:textStyle="bold"/>
+
+            <RadioButton
+                android:id="@+id/o_marker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/play_as_o"
+                android:textColor="@color/blue"
+                android:textStyle="bold"/>
+        </RadioGroup>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/new_game_button"
+            android:id="@+id/new_game_button"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_shape"
+            style="@style/button_style"
+            />
+    </LinearLayout>
+
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/game_settings"
+        android:orientation="horizontal"
+        android:id="@+id/game_board"
+        android:background="@android:color/black"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:padding="10dp"
+        android:numColumns="3"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/game_board"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/game_stats">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_win_rate_label"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:id="@+id/win_rate_label"/>
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tie_rate_label"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:layout_below="@+id/win_rate_label"
+                android:id="@+id/tie_rate_label"/>
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_lose_rate_label"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:layout_below="@+id/tie_rate_label"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/win_rate_label"
+                android:layout_marginStart="15dp">
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_rate"
+                    android:textColor="@color/red"
+                    android:id="@+id/win_rate"/>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_rate"
+                    android:textColor="@color/red"
+                    android:layout_below="@+id/win_rate"
+                    android:id="@+id/tie_rate"/>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_rate"
+                    android:textColor="@color/red"
+                    android:layout_below="@+id/tie_rate"
+                    android:id="@+id/lose_rate"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/game_result"
+            android:layout_gravity="end|center_vertical"
+            android:layout_weight="1"
+            android:singleLine="false"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"/>
+    </LinearLayout>
+
+</RelativeLayout>

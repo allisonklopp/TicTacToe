@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="action_clear_scores">Clear Scores</string>
+    <string name="new_game_button">New Game</string>
+    <string name="play_as_x">Play as X</string>
+    <string name="play_as_o">Play as O</string>
+    <string name="user_win_rate_label">Win Rate:</string>
+    <string name="tie_rate_label">Tie Rate:</string>
+    <string name="user_lose_rate_label">Lose Rate:</string>
+    <string name="default_rate">0.00%</string>
+    <string name="saved_win_rate">win_rate</string>
+    <string name="saved_lose_rate">lose_rate</string>
+    <string name="saved_tie_rate">tie_rate</string>
+    <string name="saved_num_games">saved_number_of_games_played</string>
+</resources>
